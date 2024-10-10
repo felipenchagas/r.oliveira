@@ -944,6 +944,8 @@ figure{
 /*  SECTION SUB TITLE CSS START
 /*----------------------------------------*/
 
+
+
 .section-sub-title{
   position: relative;
   color: var(--gray-color);
@@ -967,6 +969,17 @@ figure{
   left: -45px;
 }
 
+.custom-container .row {
+  display: flex;
+}
+
+.custom-container .col-lg-8 {
+  order: 1; /* Define a coluna maior para ser a primeira (esquerda) */
+}
+
+.custom-container .col-lg-4 {
+  order: 2; /* Define a coluna menor para ser a segunda (direita) */
+}
 
 /*----------------------------------------*/
 /*  SPACE CSS START
@@ -977,6 +990,8 @@ figure{
   padding-top: 140px;
   padding-bottom: 140px;
 }
+
+
 @media only screen and (min-width: 992px) and (max-width: 1199px) {
   .section-space {
     padding-top: 100px;
