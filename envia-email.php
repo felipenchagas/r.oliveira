@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
         // Destinatário (Quem recebe o pedido de orçamento)
         // OBS: Troque este e-mail pelo e-mail real da empresa que receberá os orçamentos
-        $mail->addAddress('felipe@oliveiraalpinismo.com.br'); 
+        $mail->addAddress('disparosite@oliveiraalpinismo.com.br'); 
         
         // Responder Para (O e-mail do cliente)
         $mail->addReplyTo($email, $nome);
