@@ -1,254 +1,241 @@
-/* Estilos Gerais */
-/* Estilos Gerais */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+/* =========================
+   Modern Refresh (2026)
+   Mantém sua estrutura/classe
+   ========================= */
+
+/* Reset básico */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+/* Tokens (facilita ajustar tema rápido) */
+:root{
+  --bg: #0b0f14;
+  --panel: rgba(20, 24, 30, .72);
+  --panel-solid: #12161c;
+  --border: rgba(255,255,255,.10);
+  --text: rgba(255,255,255,.92);
+  --muted: rgba(255,255,255,.70);
+
+  --accent: #c96c08;       /* seu laranja */
+  --accent-2: #ff9a1f;     /* variação p/ gradiente */
+  --ring: rgba(201,108,8,.35);
+
+  --radius: 18px;
+  --shadow: 0 18px 60px rgba(0,0,0,.55);
+  --shadow-soft: 0 10px 30px rgba(0,0,0,.35);
 }
 
-
-
-/* Botão Flutuante */
-.floating-button {
+/* Botão flutuante */
+.floating-button{
   position: fixed;
-  bottom: 30px;
-  right: 30px;
+  bottom: 28px;
+  right: 28px;
   z-index: 1000;
 }
 
-.floating-button button {
-  background-color: #c96c08; /* Azul mais escuro */
-  color: white;
-  padding: 15px 25px;
-  border: none;
-  border-radius: 50px;
+.floating-button button{
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #fff;
+  padding: 14px 22px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 999px;
   cursor: pointer;
-  font-size: 16px;
-  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 15px;
+  font-weight: 650;
+  letter-spacing: .2px;
+  box-shadow: 0 14px 35px rgba(201,108,8,.24), 0 10px 24px rgba(0,0,0,.35);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  backdrop-filter: blur(10px);
 }
 
-.floating-button button:hover {
-  background-color: #1158c7; /* Azul mais escuro no hover */
-  box-shadow: 0 4px 12px rgba(0, 86, 179, 0.4);
+.floating-button button:hover{
+  transform: translateY(-2px);
+  filter: brightness(1.03);
+  box-shadow: 0 18px 45px rgba(201,108,8,.28), 0 12px 28px rgba(0,0,0,.45);
 }
 
-/* Modal */
-.modal {
+.floating-button button:active{
+  transform: translateY(0px) scale(.99);
+}
+
+/* Modal overlay (mais “premium”) */
+.modal{
   display: none;
   position: fixed;
   z-index: 1001;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.8); /* Fundo semi-transparente escuro */
+  inset: 0;
+  background: radial-gradient(1200px 800px at 80% 10%, rgba(201,108,8,.14), transparent 55%),
+              rgba(0,0,0,.72);
   justify-content: center;
   align-items: center;
+  padding: 18px;
 }
 
-.modal-content {
-  background-color: #1e1e1e; /* Fundo escuro do modal */
-  margin: 5% auto;
-  padding: 30px;
-  border: none;
-  width: 90%;
-  max-width: 500px; /* Largura reduzida para desktop */
-  border-radius: 15px;
+/* Conteúdo do modal (glass + borda suave) */
+.modal-content{
+  background: linear-gradient(180deg, rgba(18,22,28,.72), rgba(12,14,18,.72));
+  border: 1px solid var(--border);
+  width: min(520px, 100%);
+  border-radius: var(--radius);
+  padding: 26px;
   position: relative;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s ease;
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  /* animação de entrada (quando você trocar display:flex no JS) */
+  transform: translateY(10px) scale(.98);
+  opacity: 0;
+  animation: modalIn .22s ease forwards;
 }
 
-.modal-content h2 {
+@keyframes modalIn{
+  to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+.modal-content h2{
   text-align: center;
-  margin-bottom: 25px;
-  font-weight: 700;
-  color: #ffffff; /* Texto claro */
+  margin-bottom: 18px;
+  font-weight: 800;
+  color: var(--text);
+  letter-spacing: .2px;
 }
 
-.close {
+/* Botão fechar mais moderno */
+.close{
   position: absolute;
-  top: 15px;
-  right: 20px;
-  font-size: 28px;
-  color: #bbbbbb; /* Cor do "X" */
+  top: 12px;
+  right: 12px;
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  color: rgba(255,255,255,.78);
   cursor: pointer;
-  transition: color 0.3s ease;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  transition: transform .16s ease, background .16s ease, color .16s ease;
 }
 
-.close:hover {
-  color: #ffffff; /* "X" mais claro no hover */
+.close:hover{
+  background: rgba(255,255,255,.10);
+  color: #fff;
+  transform: scale(1.03);
 }
 
-/* Estilo dos Campos de Input */
-.modal-content .input-group {
-  margin-bottom: 20px;
-}
+/* Inputs */
+.modal-content .input-group{ margin-bottom: 16px; }
 
-.modal-content .input-group label {
+.modal-content .input-group label{
   display: block;
-  margin-bottom: 5px;
-  font-weight: 600;
-  color: #e0e0e0; /* Labels claros */
+  margin-bottom: 6px;
+  font-weight: 650;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: .2px;
 }
 
 .modal-content .input-group input,
-.modal-content .input-group textarea {
+.modal-content .input-group textarea,
+.modal-content .input-group select{
   width: 100%;
-  padding: 15px;
-  border: 1px solid #333333; /* Bordas mais escuras */
-  border-radius: 10px;
-  font-size: 16px;
-  background-color: #2c2c2c; /* Fundo escuro dos inputs */
-  color: #e0e0e0; /* Texto claro nos inputs */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  padding: 14px 14px;
+  border: 1px solid rgba(255,255,255,.10);
+  border-radius: 14px;
+  font-size: 15px;
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  outline: none;
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  transition: box-shadow .18s ease, border-color .18s ease, transform .18s ease, background .18s ease;
 }
+
+.modal-content .input-group textarea{ min-height: 110px; resize: vertical; }
 
 .modal-content .input-group input::placeholder,
-.modal-content .input-group textarea::placeholder {
-  color: #777777; /* Placeholders mais claros */
-  font-style: italic;
+.modal-content .input-group textarea::placeholder{
+  color: rgba(255,255,255,.45);
+  font-style: normal; /* mais clean */
 }
 
+/* Focus ring moderno */
 .modal-content .input-group input:focus,
-.modal-content .input-group textarea:focus {
-  border-color: #c96c08; /* Azul no foco */
-  box-shadow: 0 0 8px rgba(31, 111, 235, 0.5); /* Sombra azul no foco */
-  outline: none;
+.modal-content .input-group textarea:focus,
+.modal-content .input-group select:focus{
+  border-color: rgba(201,108,8,.55);
+  box-shadow: 0 0 0 4px var(--ring);
+  background: rgba(255,255,255,.08);
 }
 
-/* Campo de telefone - ajuste de tamanho */
-.modal-content .phone-fields {
+/* Telefone */
+.modal-content .phone-fields{
   display: flex;
-  gap: 15px;
+  gap: 12px;
 }
 
-.modal-content .phone-fields input[type="text"]#ddd {
-  flex: 0 0 80px; /* Largura fixa para DDD */
-  max-width: 80px;
-  background-color: #2c2c2c; /* Fundo escuro */
-  color: #e0e0e0; /* Texto claro */
+.modal-content .phone-fields input[type="text"]#ddd{
+  flex: 0 0 86px;
+  max-width: 86px;
 }
 
-.modal-content .phone-fields input[type="text"]#telefone {
-  flex: 1;
-  background-color: #2c2c2c; /* Fundo escuro */
-  color: #e0e0e0; /* Texto claro */
+/* Form-row cidade/estado */
+.form-row{
+  display: flex;
+  gap: 12px;
 }
 
-/* Botão de envio */
-button[type="submit"] {
-  background-color: #c96c08; /* Azul escuro */
+.form-row .input-group.cidade{ flex: 1; min-width: 160px; }
+.form-row .input-group.estado{ flex: 0 0 90px; }
+
+/* Botão submit mais “CTA” */
+button[type="submit"]{
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: white;
-  padding: 15px;
+  padding: 14px 16px;
   width: 100%;
-  border: none;
-  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 14px;
   cursor: pointer;
-  font-size: 18px;
-  font-weight: 600;
-  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 16px;
+  font-weight: 750;
+  letter-spacing: .2px;
+  box-shadow: 0 14px 35px rgba(201,108,8,.22), 0 10px 24px rgba(0,0,0,.35);
+  transition: transform .18s ease, filter .18s ease, box-shadow .18s ease;
 }
 
-button[type="submit"]:hover {
-  background-color: #1158c7; /* Azul mais escuro no hover */
-  box-shadow: 0 4px 10px rgba(31, 111, 235, 0.5);
+button[type="submit"]:hover{
+  transform: translateY(-1px);
+  filter: brightness(1.03);
+  box-shadow: 0 18px 45px rgba(201,108,8,.28), 0 12px 28px rgba(0,0,0,.45);
 }
 
-/* Form-row para Cidade e Estado */
-.form-row {
-  display: flex;
-  gap: 20px;
+button[type="submit"]:active{
+  transform: translateY(0) scale(.99);
 }
 
-.form-row .input-group.cidade {
-  flex: 1;
-  min-width: 150px;
-}
+/* Select placeholder */
+.modal-content .input-group select:invalid{ color: rgba(255,255,255,.45); }
+.modal-content .input-group select:valid{ color: var(--text); }
+.modal-content .input-group select option{ color: #111; } /* options do select em alguns browsers */
 
-.form-row .input-group.estado {
-  flex: 0 0 80px; /* Largura fixa para Estado */
-}
-
-.form-row .input-group.estado input {
-  background-color: #2c2c2c;
-  color: #e0e0e0;
-  border: 1px solid #333333;
-}
-
-/* Responsividade */
-@media (max-width: 600px) {
-  .modal-content {
-    width: 95%;
-    margin: 5%;
-    padding: 20px;
-  }
-
-  .phone-fields {
-    flex-direction: row; /* Manter lado a lado */
-    gap: 10px; /* Ajustar espaçamento */
-  }
-
-  .phone-fields input[type="text"]#ddd {
-    flex: 0 0 80px; /* Ajustar para melhor visualização */
-    max-width: 80px;
-  }
-
-  .phone-fields input[type="text"]#telefone {
-    flex: 1;
-  }
-
-  /* Manter form-row lado a lado no mobile */
-  .form-row {
-    display: flex;
-    flex-direction: row;
-    gap: 10px;
-  }
-
-  .form-row .input-group.cidade,
-  .form-row .input-group.estado {
-    flex: 1;
-    min-width: 100px;
-  }
-
-  .form-row .input-group.estado {
-    flex: 0 0 80px; /* Mantém a largura menor para "Estado" */
-  }
-
-  /* Aumentar espaçamento entre os campos */
-  .modal-content .input-group {
-    margin-bottom: 25px;
-  }
-
-  /* Ajustar o padding e font-size para melhor usabilidade */
+/* Responsivo */
+@media (max-width: 600px){
+  .modal-content{ padding: 20px; border-radius: 16px; }
   .modal-content .input-group input,
-  .modal-content .input-group textarea {
-    padding: 18px;
-    font-size: 16px;
-  }
+  .modal-content .input-group textarea,
+  .modal-content .input-group select{ padding: 16px; font-size: 16px; }
 
-  /* Melhorar a aparência do DDD no mobile */
-  .modal-content .phone-fields input[type="text"]#ddd {
-    max-width: 80px; /* Ajustar para melhor visualização */
-  }
+  button[type="submit"]{ padding: 16px; font-size: 17px; }
 
-  /* Aumentar tamanho do botão de envio */
-  button[type="submit"] {
-    padding: 18px;
-    font-size: 20px;
-  }
+  .phone-fields{ gap: 10px; }
+  .form-row{ gap: 10px; }
+  .form-row .input-group.cidade{ min-width: 120px; }
+  .form-row .input-group.estado{ flex: 0 0 86px; }
 }
 
-/* Ajuste do label "UF" */
-.modal-content .input-group select:invalid {
-  color: #999999;
-}
-
-.modal-content .input-group select:valid {
-  color: #e0e0e0;
-}
-
-.modal-content .input-group select option {
-  color: #e0e0e0;
+/* (Opcional) reduzir animações p/ acessibilidade */
+@media (prefers-reduced-motion: reduce){
+  .modal-content{ animation: none; opacity: 1; transform: none; }
+  .floating-button button, button[type="submit"], .close{ transition: none; }
 }

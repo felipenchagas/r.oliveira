@@ -18,6 +18,7 @@ $TO_EMAIL  = 'felipe@empresarialweb.com.br'; // quem recebe
 /**
  * Helpers
  */
+ 
 function respond_js(string $msg, string $redirectUrl = ''): void {
     $msg = addslashes($msg);
     header('Content-Type: text/html; charset=UTF-8');
