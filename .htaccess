@@ -1,1 +1,1 @@
-<IfModule mod_rewrite.c>    RewriteEngine On        # 1. Remove o .html da URL (visualmente)    RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]    RewriteRule ^ /%1 [R=301,L,NE]    # 2. Faz o servidor entender a URL sem .html    RewriteCond %{REQUEST_FILENAME} !-d    RewriteCond %{REQUEST_FILENAME}.html -f    RewriteRule ^(.+?)/?$ $1.html [L]</IfModule>
+<IfModule mod_rewrite.c>    RewriteEngine On</IfModule>
