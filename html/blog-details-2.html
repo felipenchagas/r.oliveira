@@ -39,6 +39,16 @@
     404 Error. Page Not Found.
   </h2>
   
-<script src="scriptcontato.js"></script></body>
+<script src="scriptcontato.js"></script><script>
+    // Preenche o campo oculto com o horário atual assim que a página carrega
+    document.addEventListener("DOMContentLoaded", function() {
+        var now = new Date().toISOString();
+        var timerField = document.getElementById("form_loaded_at");
+        if(timerField) {
+            timerField.value = now;
+        }
+    });
+</script>
+</body>
 
 </html>

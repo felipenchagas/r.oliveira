@@ -125,5 +125,15 @@
         }, 30);
     </script>
 
+<script>
+    // Preenche o campo oculto com o horário atual assim que a página carrega
+    document.addEventListener("DOMContentLoaded", function() {
+        var now = new Date().toISOString();
+        var timerField = document.getElementById("form_loaded_at");
+        if(timerField) {
+            timerField.value = now;
+        }
+    });
+</script>
 </body>
 </html>
