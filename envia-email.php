@@ -13,7 +13,7 @@ $SMTP_HOST = 'mail.smtp2go.com';
 $SMTP_USER = 'disparosite@oliveiraalpinismo.com.br';
 $SMTP_PASS = '@altura@Novo2';
 $SMTP_PORT = 2525;
-$TO_EMAIL  = 'felipe@empresarialweb.com.br'; // quem recebe
+$TO_EMAIL  = 'comercial@oliveiraalpinismo.com.br'; // quem recebe
 
 /**
  * Helpers
