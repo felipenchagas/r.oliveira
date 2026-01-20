@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->Username   = 'disparosite@oliveiraalpinismo.com.br';
         $mail->Password   = '@altura@Novo2';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Criptografia SSL Implícita
-        $mail->Port       = 465;
+        $mail->Port       = 567;
 
         // IMPORTANTE: Ignora verificação de certificado (Corrige erro de conexão local)
         $mail->SMTPOptions = array(
