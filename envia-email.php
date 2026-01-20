@@ -1,103 +1,93 @@
 <?php
-declare(strict_types=1); // ESTA LINHA TEM QUE SER A PRIMEIRA!
+// --- SISTEMA DE LOG DE ERROS ---
+// Isso vai criar um arquivo erro_log.txt na pasta para você ler o erro real
+$arquivoLog = __DIR__ . '/erro_log.txt';
 
-// Debug: Mostra erros na tela se houver (agora vai funcionar)
-ini_set('display_errors', '1');
-ini_set('display_startup_errors', '1');
-error_reporting(E_ALL);
-
-// Previne saída de espaços em branco antes dos headers
-ob_start();
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
-
-/**
- * --- DIAGNÓSTICO DE ARQUIVOS ---
- */
-$caminho_vendor_local = __DIR__ . '/vendor/autoload.php';
-$caminho_vendor_acima = __DIR__ . '/../vendor/autoload.php';
-
-if (file_exists($caminho_vendor_local)) {
-    require $caminho_vendor_local;
-} elseif (file_exists($caminho_vendor_acima)) {
-    require $caminho_vendor_acima;
-} else {
-    die("<div style='color:red; font-size:20px; padding:20px; border:2px solid red;'>
-        <strong>ERRO CRÍTICO:</strong> O arquivo 'vendor/autoload.php' não foi encontrado.
-    </div>");
+function gravarLog($msg) {
+    global $arquivoLog;
+    $data = date('d/m/Y H:i:s');
+    // Grava no arquivo
+    file_put_contents($arquivoLog, "[$data] $msg" . PHP_EOL, FILE_APPEND);
 }
 
-/**
- * Configurações
- */
-$SMTP_HOST = 'mail.smtp2go.com';
-$SMTP_USER = 'disparosite@oliveiraalpinismo.com.br';
-$SMTP_PASS = '@altura@Novo2'; // Verifique se essa senha está correta!
-$SMTP_PORT = 2525;
-$TO_EMAIL  = 'comercial@oliveiraalpinismo.com.br';
-
-/**
- * Funções Auxiliares
- */
-function respond_js(string $msg, string $redirectUrl = ''): void {
-    ob_clean(); 
-    $msg = addslashes($msg);
-    header('Content-Type: text/html; charset=UTF-8');
-    
-    echo "<!DOCTYPE html><html><head><meta charset='UTF-8'></head><body>";
-    if ($redirectUrl !== '') {
-        $redirectUrl = addslashes($redirectUrl);
-        echo "<script>alert('{$msg}'); window.location.href='{$redirectUrl}';</script>";
-    } else {
-        echo "<script>alert('{$msg}'); window.history.back();</script>";
+// Captura erros fatais (Tela Branca / Erro 500 que o PHP esconde)
+register_shutdown_function(function() {
+    $erro = error_get_last();
+    if ($erro !== null) {
+        gravarLog("ERRO CRÍTICO (SHUTDOWN): " . $erro['message'] . " no arquivo " . $erro['file'] . " linha " . $erro['line']);
     }
-    echo "</body></html>";
-    exit;
-}
+});
 
-function safe_post(string $key): string {
-    return isset($_POST[$key]) ? trim((string)$_POST[$key]) : '';
-}
-
-/**
- * Segurança
- */
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header('Location: /');
-    exit;
-}
-
-if (safe_post('honeypot') !== '') {
-    http_response_code(400);
-    exit('Erro: SPAM detectado.');
-}
-
-/**
- * Coleta de Dados
- */
-$nome           = strip_tags(safe_post('nome'));
-$email          = filter_var(safe_post('email'), FILTER_SANITIZE_EMAIL) ?: '';
-$ddd            = preg_replace('/\D+/', '', safe_post('ddd'));
-$telefone       = preg_replace('/\D+/', '', safe_post('telefone'));
-$cidade         = strip_tags(safe_post('cidade'));
-$estado         = strip_tags(safe_post('estado'));
-$descricao_raw  = strip_tags(safe_post('descricao'));
-$descricao_html = nl2br(htmlspecialchars($descricao_raw, ENT_QUOTES, 'UTF-8'));
-
-if ($nome === '' || $email === '' || $telefone === '') {
-    respond_js('Por favor, preencha todos os campos obrigatórios.');
-}
-if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-    respond_js('E-mail inválido.');
-}
-
-/**
- * Envio
- */
-$mail = new PHPMailer(true);
+// Inicia processamento
+gravarLog("--- NOVA TENTATIVA DE ENVIO ---");
 
 try {
+    // Esconde erros da tela para não quebrar o Javascript, mas grava no log
+    ini_set('display_errors', '0'); 
+    error_reporting(E_ALL);
+
+    ob_start();
+
+    // Verifica VENDOR
+    $caminhoVendor = __DIR__ . '/vendor/autoload.php';
+    if (!file_exists($caminhoVendor)) {
+        $caminhoVendor = __DIR__ . '/../vendor/autoload.php';
+    }
+
+    if (!file_exists($caminhoVendor)) {
+        throw new Exception("Pasta vendor não encontrada. Caminho testado: $caminhoVendor");
+    }
+
+    require $caminhoVendor;
+    gravarLog("Vendor carregado com sucesso.");
+
+    use PHPMailer\PHPMailer\PHPMailer;
+    use PHPMailer\PHPMailer\Exception as MailerException;
+
+    // --- CONFIGURAÇÕES ---
+    $SMTP_HOST = 'mail.smtp2go.com';
+    $SMTP_USER = 'disparosite@oliveiraalpinismo.com.br';
+    $SMTP_PASS = '@altura@Novo2';
+    $SMTP_PORT = 2525;
+    $TO_EMAIL  = 'comercial@oliveiraalpinismo.com.br';
+
+    function respond_js($msg, $url = '') {
+        gravarLog("Enviando resposta ao usuario: $msg");
+        ob_clean();
+        echo "<!DOCTYPE html><html><body><script>alert('".addslashes($msg)."');";
+        if ($url) echo "window.location.href='$url';";
+        else echo "window.history.back();";
+        echo "</script></body></html>";
+        exit;
+    }
+
+    // Verifica Método
+    if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+        gravarLog("Acesso direto via navegador (GET) detectado. Redirecionando.");
+        header('Location: /');
+        exit;
+    }
+
+    // Verifica Honeypot
+    if (!empty($_POST['honeypot'])) {
+        gravarLog("SPAM bloqueado (Honeypot preenchido).");
+        die('Spam detectado');
+    }
+
+    // Dados
+    $nome = $_POST['nome'] ?? '';
+    $email = filter_var($_POST['email'] ?? '', FILTER_SANITIZE_EMAIL);
+    $telefone = preg_replace('/\D+/', '', $_POST['telefone'] ?? '');
+    
+    gravarLog("Dados recebidos: Nome=$nome, Email=$email");
+
+    if (!$email || !$nome) {
+        throw new Exception("Campos obrigatórios vazios.");
+    }
+
+    // Envio
+    $mail = new PHPMailer(true);
+    
     $mail->isSMTP();
     $mail->Host       = $SMTP_HOST;
     $mail->SMTPAuth   = true;
@@ -106,38 +96,24 @@ try {
     $mail->Port       = $SMTP_PORT;
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->CharSet    = 'UTF-8';
-    $mail->SMTPDebug  = 0; 
-    $mail->Timeout    = 20;
-
+    
     $mail->setFrom($SMTP_USER, 'Site Oliveira Alpinismo');
     $mail->addAddress($TO_EMAIL);
     $mail->addReplyTo($email, $nome);
 
     $mail->isHTML(true);
-    $assuntoCidade = trim($cidade . ($estado !== '' ? "/$estado" : ''));
-    $mail->Subject = "Novo Orçamento: {$nome}" . ($assuntoCidade !== '' ? " - {$assuntoCidade}" : '');
-
-    $telefone_fmt = ($ddd !== '' ? "($ddd) " : '') . $telefone;
-
-    $mail->Body = "
-    <div style='font-family: Arial, sans-serif; color: #333;'>
-        <h2>Solicitação de Orçamento</h2>
-        <p><strong>Cliente:</strong> " . htmlspecialchars($nome) . "</p>
-        <p><strong>E-mail:</strong> " . htmlspecialchars($email) . "</p>
-        <p><strong>Telefone:</strong> " . htmlspecialchars($telefone_fmt) . "</p>
-        <p><strong>Local:</strong> " . htmlspecialchars($assuntoCidade) . "</p>
-        <hr>
-        <h3>Mensagem:</h3>
-        <p>{$descricao_html}</p>
-    </div>";
-
-    $mail->AltBody = "Cliente: $nome\nTel: $telefone_fmt\nMsg: $descricao_raw";
+    $mail->Subject = "Orcamento Site: $nome";
+    $mail->Body    = "<h3>Novo Contato</h3><p>Nome: $nome</p><p>Email: $email</p><p>Telefone: $telefone</p><p>Msg: " . nl2br(htmlspecialchars($_POST['descricao'] ?? '')) . "</p>";
 
     $mail->send();
+    
+    gravarLog("SUCESSO: E-mail enviado para o SMTP.");
+    respond_js('Enviado com sucesso!', 'https://oliveiraalpinismo.com.br/sucesso');
 
-    respond_js('Sucesso! Entraremos em contato.', 'https://oliveiraalpinismo.com.br/sucesso');
-
-} catch (Exception $e) {
-    // Se der erro de SMTP, agora vai mostrar o motivo real na tela
-    respond_js("Erro ao enviar: " . $mail->ErrorInfo);
+} catch (MailerException $e) {
+    gravarLog("ERRO PHPMAILER: " . $e->getMessage());
+    respond_js("Erro ao enviar e-mail. Tente novamente.");
+} catch (Throwable $t) {
+    gravarLog("ERRO GERAL: " . $t->getMessage() . " na linha " . $t->getLine());
+    respond_js("Ocorreu um erro no sistema.");
 }
