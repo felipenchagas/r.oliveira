@@ -1,17 +1,19 @@
 <?php
-// Ativa exibição de erros
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
+declare(strict_types=1); // ESTA LINHA TEM QUE SER A PRIMEIRA!
+
+// Debug: Mostra erros na tela se houver (agora vai funcionar)
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-// Previne saída de espaços em branco
+// Previne saída de espaços em branco antes dos headers
 ob_start();
 
-declare(strict_types=1);
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
 /**
  * --- DIAGNÓSTICO DE ARQUIVOS ---
- * Isso vai impedir o Erro 500 se a pasta vendor não for encontrada
  */
 $caminho_vendor_local = __DIR__ . '/vendor/autoload.php';
 $caminho_vendor_acima = __DIR__ . '/../vendor/autoload.php';
@@ -21,25 +23,17 @@ if (file_exists($caminho_vendor_local)) {
 } elseif (file_exists($caminho_vendor_acima)) {
     require $caminho_vendor_acima;
 } else {
-    // Se cair aqui, o erro aparecerá na tela!
     die("<div style='color:red; font-size:20px; padding:20px; border:2px solid red;'>
-        <strong>ERRO CRÍTICO:</strong> O arquivo 'vendor/autoload.php' não foi encontrado.<br>
-        O PHP procurou em:<br>
-        1. $caminho_vendor_local<br>
-        2. $caminho_vendor_acima<br><br>
-        Verifique se você enviou a pasta 'vendor' para o servidor via FTP.
+        <strong>ERRO CRÍTICO:</strong> O arquivo 'vendor/autoload.php' não foi encontrado.
     </div>");
 }
-
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 /**
  * Configurações
  */
 $SMTP_HOST = 'mail.smtp2go.com';
 $SMTP_USER = 'disparosite@oliveiraalpinismo.com.br';
-$SMTP_PASS = '@altura@Novo2'; // Troque se já tiver criado a nova senha
+$SMTP_PASS = '@altura@Novo2'; // Verifique se essa senha está correta!
 $SMTP_PORT = 2525;
 $TO_EMAIL  = 'comercial@oliveiraalpinismo.com.br';
 
@@ -144,6 +138,6 @@ try {
     respond_js('Sucesso! Entraremos em contato.', 'https://oliveiraalpinismo.com.br/sucesso');
 
 } catch (Exception $e) {
-    // Se der erro de SMTP, mostra na tela agora (para debug)
+    // Se der erro de SMTP, agora vai mostrar o motivo real na tela
     respond_js("Erro ao enviar: " . $mail->ErrorInfo);
 }
