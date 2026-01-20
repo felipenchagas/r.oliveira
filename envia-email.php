@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail->isSMTP();
         $mail->Host       = 'mail.oliveiraalpinismo.com.br'; // Endereço do host
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'contato@oliveiraalpinismo.com.br';
+        $mail->Username   = 'disparosite@oliveiraalpinismo.com.br';
         $mail->Password   = '@altura@Novo2';
         $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Criptografia SSL Implícita
         $mail->Port       = 465;
@@ -42,8 +42,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         );
 
         // --- Remetente e Destinatário ---
-        $mail->setFrom('contato@oliveiraalpinismo.com.br', 'Site Oliveira Alpinismo');
-        $mail->addAddress('contato@oliveiraalpinismo.com.br');
+        $mail->setFrom('disparosite@oliveiraalpinismo.com.br', 'Site Oliveira Alpinismo');
+        $mail->addAddress('comercial@oliveiraalpinismo.com.br');
         // $mail->addAddress($email); // Se quiser enviar cópia para o cliente
 
         // --- Conteúdo ---
