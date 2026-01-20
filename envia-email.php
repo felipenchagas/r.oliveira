@@ -1,33 +1,43 @@
 <?php
+// Previne saída de espaços em branco antes dos headers
+ob_start();
+
 declare(strict_types=1);
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
+// Certifique-se que o caminho do autoload está correto no seu servidor
 require __DIR__ . '/vendor/autoload.php';
 
 /**
- * Config
+ * Configurações
+ * IMPORTANTE: Troque a senha abaixo pela nova senha que você criar!
  */
 $SMTP_HOST = 'mail.smtp2go.com';
 $SMTP_USER = 'disparosite@oliveiraalpinismo.com.br';
-$SMTP_PASS = '@altura@Novo2';
+$SMTP_PASS = '@altura@Novo2'; // <--- TROQUE ESSA SENHA IMEDIATAMENTE POR SEGURANÇA
 $SMTP_PORT = 2525;
-$TO_EMAIL  = 'comercial@oliveiraalpinismo.com.br'; // quem recebe
+$TO_EMAIL  = 'comercial@oliveiraalpinismo.com.br';
 
 /**
- * Helpers
+ * Funções Auxiliares
  */
- 
 function respond_js(string $msg, string $redirectUrl = ''): void {
+    // Limpa qualquer output anterior para evitar conflito de JSON/JS
+    ob_clean(); 
+    
     $msg = addslashes($msg);
     header('Content-Type: text/html; charset=UTF-8');
+    
+    echo "<!DOCTYPE html><html><head><meta charset='UTF-8'></head><body>";
     if ($redirectUrl !== '') {
         $redirectUrl = addslashes($redirectUrl);
         echo "<script>alert('{$msg}'); window.location.href='{$redirectUrl}';</script>";
     } else {
         echo "<script>alert('{$msg}'); window.history.back();</script>";
     }
+    echo "</body></html>";
     exit;
 }
 
@@ -36,32 +46,33 @@ function safe_post(string $key): string {
 }
 
 /**
- * Security + method
+ * Segurança e Validação de Método
  */
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    // Se acessar direto pelo navegador, redireciona para a home
     header('Location: /');
     exit;
 }
 
-// Honeypot
+// Honeypot (Anti-Spam simples)
 if (safe_post('honeypot') !== '') {
     http_response_code(400);
     exit('Erro: Atividade suspeita detectada (SPAM).');
 }
 
 /**
- * Data
+ * Coleta de Dados
  */
-$nome      = strip_tags(safe_post('nome'));
-$email     = filter_var(safe_post('email'), FILTER_SANITIZE_EMAIL) ?: '';
-$ddd       = preg_replace('/\D+/', '', safe_post('ddd'));
-$telefone  = preg_replace('/\D+/', '', safe_post('telefone'));
-$cidade    = strip_tags(safe_post('cidade'));
-$estado    = strip_tags(safe_post('estado'));
+$nome          = strip_tags(safe_post('nome'));
+$email         = filter_var(safe_post('email'), FILTER_SANITIZE_EMAIL) ?: '';
+$ddd           = preg_replace('/\D+/', '', safe_post('ddd'));
+$telefone      = preg_replace('/\D+/', '', safe_post('telefone'));
+$cidade        = strip_tags(safe_post('cidade'));
+$estado        = strip_tags(safe_post('estado'));
 $descricao_raw = strip_tags(safe_post('descricao'));
 $descricao_html = nl2br(htmlspecialchars($descricao_raw, ENT_QUOTES, 'UTF-8'));
 
-// Basic validation
+// Validação básica
 if ($nome === '' || $email === '' || $telefone === '') {
     respond_js('Por favor, preencha todos os campos obrigatórios.');
 }
@@ -70,38 +81,36 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 /**
- * Send
+ * Envio do E-mail
  */
 $mail = new PHPMailer(true);
 
 try {
-    // SMTP
+    // Configuração do Servidor
     $mail->isSMTP();
     $mail->Host       = $SMTP_HOST;
     $mail->SMTPAuth   = true;
     $mail->Username   = $SMTP_USER;
     $mail->Password   = $SMTP_PASS;
     $mail->Port       = $SMTP_PORT;
-    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Tente ENCRYPTION_SMTPS se falhar com porta 465
     $mail->CharSet    = 'UTF-8';
 
-    // Debug no log do Apache (deixa ligado só pra diagnosticar)
-    $mail->SMTPDebug  = 2; // 0=off, 2=client/server
-    $mail->Debugoutput = function ($str, $level) {
-        error_log("PHPMailer[$level] $str");
-    };
+    // Debug: Mantenha desligado (0) em produção para não quebrar o JS de resposta
+    // Use o log do servidor para ver erros
+    $mail->SMTPDebug  = 0; 
 
     $mail->Timeout = 20;
     $mail->SMTPKeepAlive = false;
 
-    // From/To
+    // Remetente e Destinatário
     $mail->setFrom($SMTP_USER, 'Site Oliveira Alpinismo');
     $mail->addAddress($TO_EMAIL);
 
-    // Reply-to do cliente
+    // Reply-to (Responder para o cliente)
     $mail->addReplyTo($email, $nome);
 
-    // Content
+    // Conteúdo
     $mail->isHTML(true);
     $assuntoCidade = trim($cidade . ($estado !== '' ? "/$estado" : ''));
     $mail->Subject = "Novo Orçamento: {$nome}" . ($assuntoCidade !== '' ? " - {$assuntoCidade}" : '');
@@ -135,8 +144,9 @@ try {
     $mail->send();
 
     respond_js('Orçamento solicitado com sucesso! Entraremos em contato em breve.', 'https://oliveiraalpinismo.com.br/sucesso');
+
 } catch (Exception $e) {
-    // Vai pro log também
+    // Registra o erro no log do servidor (arquivo error_log)
     error_log('PHPMailer error: ' . $mail->ErrorInfo);
-    respond_js("A mensagem não pôde ser enviada. Erro: {$mail->ErrorInfo}");
+    respond_js("A mensagem não pôde ser enviada. Tente novamente mais tarde.");
 }
