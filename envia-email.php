@@ -1,16 +1,17 @@
 <?php
-// AS LINHAS "USE" TÊM QUE SER AS PRIMEIRAS, FORA DE QUALQUER IF
+// IMPORTANTE: Estas linhas devem ficar no topo absoluto do arquivo
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-// Carrega o autoloader do Composer (confira se o caminho 'vendor' está correto nessa pasta)
+// Carrega o autoloader (confira se o caminho da pasta vendor está certo)
 require 'vendor/autoload.php';
 
-// Verifica se houve POST
+// Verifica se a requisição é um POST
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $nome = $_POST['nome'] ?? 'Sem nome';
-    $email = $_POST['email'] ?? 'Sem email';
+    // Coleta os dados do formulário (com valores padrão para evitar erro undefined)
+    $nome     = $_POST['nome'] ?? 'Sem nome';
+    $email    = $_POST['email'] ?? 'Sem email';
     $telefone = $_POST['telefone'] ?? 'Sem telefone';
     $mensagem = $_POST['mensagem'] ?? 'Sem mensagem';
 
@@ -19,23 +20,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     try {
         // --- Configurações do Servidor ---
         $mail->isSMTP();
-        $mail->Host       = 'mail.oliveiraalpinismo.com.br'; // Verifique o host exato
+        $mail->Host       = 'mail.oliveiraalpinismo.com.br';
         $mail->SMTPAuth   = true;
-        $mail->Username   = 'contato@oliveiraalpinismo.com.br'; // Seu email de envio
-        $mail->Password   = '@altura@Novo2'; // <--- COLOQUE A SENHA AQUI
-        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Ou ENCRYPTION_STARTTLS com porta 587
-        $mail->Port       = 465; // Ou 587
+        $mail->Username   = 'contato@oliveiraalpinismo.com.br';
+        $mail->Password   = '@altura@Novo2'; // Senha inserida aqui
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS; // Porta 465 (SSL)
+        $mail->Port       = 465;
 
         // --- Remetente e Destinatário ---
         $mail->setFrom('contato@oliveiraalpinismo.com.br', 'Site Oliveira Alpinismo');
-        $mail->addAddress('contato@oliveiraalpinismo.com.br'); // Quem recebe
-        // $mail->addAddress('outro@email.com'); // Cópia opcional
+        $mail->addAddress('contato@oliveiraalpinismo.com.br'); 
+        
+        // Se quiser que o cliente receba uma cópia, descomente a linha abaixo:
+        // $mail->addAddress($email); 
 
-        // --- Conteúdo ---
+        // --- Conteúdo do Email ---
         $mail->isHTML(true);
-        $mail->Subject = "Novo contato pelo site: $nome";
+        $mail->Subject = "Contato Site: $nome";
         $mail->Body    = "
-            <h3>Novo contato recebido</h3>
+            <h3>Novo contato recebido pelo site</h3>
             <p><strong>Nome:</strong> $nome</p>
             <p><strong>Email:</strong> $email</p>
             <p><strong>Telefone:</strong> $telefone</p>
@@ -49,5 +52,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "Erro ao enviar mensagem: {$mail->ErrorInfo}";
     }
 } else {
-    echo "Nenhum dado recebido via POST.";
+    // Caso tentem acessar o arquivo direto pelo navegador sem enviar dados
+    echo "Aguardando envio do formulário...";
 }
