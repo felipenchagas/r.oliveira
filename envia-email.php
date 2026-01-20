@@ -1,5 +1,9 @@
 <?php
 // Previne saída de espaços em branco antes dos headers
+// --- ADICIONE ESTAS 3 LINHAS PARA VER O ERRO NA TELA ---
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 ob_start();
 
 declare(strict_types=1);
