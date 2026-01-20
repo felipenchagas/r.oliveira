@@ -68,7 +68,7 @@ try {
         exit;
     }
 
-    // Verifica Honeypot
+    // Verifica Honeypota
     if (!empty($_POST['honeypot'])) {
         gravarLog("SPAM bloqueado (Honeypot preenchido).");
         die('Spam detectado');
