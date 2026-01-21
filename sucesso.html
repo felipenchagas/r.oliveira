@@ -1,394 +1,272 @@
 <!doctype html>
-<html class="no-js" lang="pt-BR">
-
-
-<!-- Mirrored from /formulario by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 23 Feb 2024 11:43:18 GMT -->
+<html lang="pt-br">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z5HLMKFXGS"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Mensagem enviada | Oliveira Alpinismo</title>
+  <meta name="robots" content="noindex, nofollow" />
 
-  gtag('config', 'G-Z5HLMKFXGS');
-</script>
-   <meta charset="utf-8">
-<script type="text/javascript">
-    (function(c,l,a,r,i,t,y){
-        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "ogqztaspfn");
-</script>
-   <meta http-equiv="x-ua-compatible" content="ie=edge">
-<title>ENVIADO COM SUCESSO</title>
-   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root{
+      --bg: #f6f8fc;
+      --card: #ffffff;
+      --text: #101828;
+      --muted: #475467;
+      --stroke: rgba(16,24,40,.10);
+      --shadow: 0 20px 60px rgba(16,24,40,.12);
+      --shadow2: 0 10px 26px rgba(16,24,40,.08);
+      --brand: #d6b25e;   /* dourado elegante */
+      --brand2:#f3da8a;
+      --ok:#16a34a;
+      --okBg:#eaf7ef;
+    }
 
-   <!-- CSS here -->
-   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-   <link rel="stylesheet" href="assets/css/meanmenu.min.css">
-   <link rel="stylesheet" href="assets/css/animate.css">
-   <link rel="stylesheet" href="assets/css/swiper.min.css">
-   <link rel="stylesheet" href="assets/css/slick.css">
-   <link rel="stylesheet" href="assets/css/magnific-popup.css">
-   <link rel="stylesheet" href="assets/css/fontawesome-pro.css">
-   <link rel="stylesheet" href="assets/css/icomoon.css">
-   <link rel="stylesheet" href="assets/css/spacing.css">
-   <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
-   <link rel="stylesheet" href="assets/css/main.css">
-   <link rel="stylesheet" type="text/css" href="estilo/wts.css">
-<!-- Google Tag Manager --> <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-T5RCHCJ');</script> <!-- End Google Tag Manager --><link rel="stylesheet" href="stylescontato.css?v=1.0.0"></head>
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color: var(--text);
+      background:
+        radial-gradient(900px 450px at 10% 10%, rgba(214,178,94,.12), transparent 55%),
+        radial-gradient(700px 420px at 90% 12%, rgba(243,218,138,.10), transparent 55%),
+        linear-gradient(180deg, #ffffff, var(--bg));
+    }
+
+    .wrap{
+      min-height:100%;
+      display:grid;
+      place-items:center;
+      padding: 28px 16px;
+    }
+
+    .card{
+      width: min(980px, 100%);
+      background: var(--card);
+      border: 1px solid var(--stroke);
+      border-radius: 22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+
+    .top{
+      padding: 22px 22px 0 22px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 18px;
+      flex-wrap:wrap;
+    }
+
+    /* Mantém a logo EXATAMENTE como você pediu */
+    .logo{
+      height: 46px;
+      width: auto;
+      display:block;
+    }
+
+    .seal{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(22,163,74,.20);
+      background: var(--okBg);
+      color: var(--ok);
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: .2px;
+    }
+
+    .seal svg{ width:18px;height:18px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 0;
+      margin-top: 18px;
+    }
+
+    @media (max-width: 900px){
+      .grid{ grid-template-columns:1fr; }
+    }
+
+    .left{
+      padding: 22px;
+    }
+
+    .right{
+      padding: 22px;
+      border-left: 1px solid var(--stroke);
+      background:
+        radial-gradient(700px 300px at 60% 0%, rgba(214,178,94,.10), transparent 60%);
+    }
+
+    @media (max-width: 900px){
+      .right{ border-left:none; border-top:1px solid var(--stroke); }
+    }
+
+    h1{
+      margin: 0 0 10px 0;
+      font-size: clamp(26px, 3vw, 40px);
+      line-height: 1.08;
+      letter-spacing: -0.6px;
+    }
+
+    p{
+      margin: 0 0 16px 0;
+      color: var(--muted);
+      line-height: 1.65;
+      font-size: 16px;
+    }
+
+    .hint{
+      border: 1px solid rgba(214,178,94,.28);
+      background: rgba(214,178,94,.08);
+      border-radius: 16px;
+      padding: 14px;
+      color: #6b4e10;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap:wrap;
+      margin-top: 16px;
+    }
+
+    .btn{
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap: 10px;
+      padding: 12px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--stroke);
+      font-weight: 900;
+      font-size: 14px;
+      letter-spacing: .2px;
+      user-select:none;
+      transition: transform .12s ease, box-shadow .12s ease, filter .12s ease, background .12s ease;
+      box-shadow: var(--shadow2);
+    }
+    .btn:active{ transform: translateY(1px); }
+
+    .btn-primary{
+      color: #1b1304;
+      border-color: rgba(214,178,94,.38);
+      background: linear-gradient(180deg, var(--brand2), var(--brand));
+    }
+    .btn-primary:hover{ filter: brightness(1.03); }
+
+    .btn-ghost{
+      color: var(--text);
+      background: #ffffff;
+    }
+    .btn-ghost:hover{ background: #fbfcff; }
+
+    .box{
+      border: 1px solid var(--stroke);
+      border-radius: 18px;
+      background: #ffffff;
+      padding: 16px;
+      box-shadow: var(--shadow2);
+    }
+
+    .box h2{
+      margin: 0 0 10px 0;
+      font-size: 14px;
+      color: var(--text);
+      letter-spacing: .2px;
+    }
+
+    .list{
+      margin:0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+
+    .footer{
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--stroke);
+      display:flex;
+      justify-content:space-between;
+      gap: 10px;
+      flex-wrap:wrap;
+      color: rgba(71,84,103,.85);
+      font-size: 12px;
+    }
+  </style>
+</head>
 
 <body>
-  <!-- Google Tag Manager (noscript) -->
-<noscript><iframe title="Google Tag Manager" src="https://www.googletagmanager.com/ns.html?id=GTM-T5RCHCJ" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <div class="wrap">
+    <main class="card" role="main" aria-label="Sucesso">
+      <header class="top">
+        <!-- LOGO: do jeito que você pediu -->
+        <img class="logo" src="assets/imgs/logo/logo.png" alt="Oliveira Alpinismo">
 
-   
- 
-   
+        <div class="seal">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          Mensagem enviada com sucesso
+        </div>
+      </header>
 
-   
+      <section class="grid">
+        <div class="left">
+          <h1>Pronto. Já recebemos seu contato ✅</h1>
+          <p>
+            Nossa equipe vai analisar sua solicitação e entrar em contato em seguida.
+            Se quiser agilizar o orçamento, chame no WhatsApp e envie fotos ou vídeo do local.
+          </p>
 
-   <!-- Back to top start -->
-   <div class="backtotop-wrap cursor-pointer">
-      <svg class="backtotop-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
-         <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98" />
-      </svg>
-   </div>
-   <!-- Back to top end -->
+          <div class="hint">
+            <strong>Dica rápida:</strong> Informe altura aproximada, acesso ao local e o tipo de serviço.
+            Isso acelera bastante o orçamento.
+          </div>
 
-   <!-- search area start -->
-   <div class="vw-search-area">
-      <div class="container">
-         <div class="row">
-            <div class="col-xl-12">
-               <div class="vw-search-form">
-                  <div class="vw-search-close text-center mb-20">
-                     <button class="vw-search-close-btn vw-search-close-btn"></button>
-                  </div>
-                  <form action="#">
-                     <div class="vw-search-input">
-                        <input type="text" placeholder="oliveira">
-                        <button type="submit"><i class="icon-search"></i></button>
-                     </div>
-                     <div class="vw-search-category">
+          <div class="actions">
+            <a class="btn btn-primary" href="https://wa.me/5541997230445" target="_blank" rel="noopener">💬 WhatsApp</a>
+            <a class="btn btn-ghost" href="/">🏠 Voltar ao site</a>
+          </div>
 
-                     </div>
-                  </form>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="body-overlay"></div>
-   <!-- search area end -->
+          <div class="footer">
+            <span>Oliveira Alpinismo</span>
+            <span>Atendimento comercial</span>
+          </div>
+        </div>
 
-   <!-- Offcanvas area start -->
-   <div class="fix">
-      <div class="offcanvas__info">
-         <div class="offcanvas__wrapper">
-            <div class="offcanvas__content">
-               <div class="offcanvas__top mb-40 d-flex justify-content-between align-items-center">
-                  <div class="offcanvas__logo">
-                     <a href="https://oliveiraalpinismo.com.br">
-                        <img src="assets/imgs/logo/logo.png" alt="Logo Oliveira Alpinismo">
-                     </a>
-                  </div>
-                  <div class="offcanvas__close">
-                     <button>
-                        <i class="fal fa-times"></i>
-                     </button>
-                  </div>
-               </div>
-               <div class="offcanvas__search mb-25">
-                  <p class="text-white">A Oliveira Alpinismo é uma empresa especializada em soluções técnicas em altura nos setores da construção civil e industrial.</p>
-               </div>
-               <div class="mobile-menu fix mb-40"></div>
-               <div class="offcanvas__contact mt-30 mb-20">
-                  <h4>Contact Info</h4>
-                  <ul>
-                     <li class="d-flex align-items-center">
-                        <div class="offcanvas__contact-icon mr-15">
-                           <i class="fal fa-map-marker-alt"></i>
-                        </div>
-                        <div class="offcanvas__contact-text">
-                           <a target="_blank"
-                              href="#">Rua Sete de Setembro, 620 /C 3 – Duque de Caxias – RJ</a>
-                        </div>
-                     </li>
-                     <li class="d-flex align-items-center">
-                        <div class="offcanvas__contact-icon mr-15">
-                           <i class="far fa-phone"></i>
-                        </div>
-                        <div class="offcanvas__contact-text">
-                           <a href="tel:+552136551564">(21) 3655-1564</a>
-                        </div>
-                     </li>
-                     <li class="d-flex align-items-center">
-                        <div class="offcanvas__contact-icon mr-15">
-                           <i class="fal fa-envelope"></i>
-                        </div>
-                        <div class="offcanvas__contact-text">
-                           <a href="tel:2136551564"><span class="mailto:comercial@oliveiraalpinismo.com.br">comercial@oliveiraalpinismo.com.br</span></a>
-                        </div>
-                     </li>
-                  </ul>
-               </div>
-               <div class="offcanvas__social">
-                  <ul>
-                     <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                     <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                     <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                     <li><a href="#"><i class="fab fa-linkedin"></i></a></li>
-                  </ul>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="offcanvas__overlay"></div>
-   <div class="offcanvas__overlay-white"></div>
-   <!-- Offcanvas area start -->
+        <aside class="right">
+          <div class="box">
+            <h2>Para agilizar o atendimento</h2>
+            <ul class="list">
+              <li>Fotos/vídeo do local</li>
+              <li>Cidade / endereço aproximado</li>
+              <li>Altura e acesso (escada, telhado, fachada)</li>
+              <li>Se for urgente, escreva “URGENTE” no WhatsApp</li>
+            </ul>
+          </div>
 
-   <!-- Header area start -->
-   <header>
-      <div id="header-sticky" class="header-area header-style-two">
-         <div class="container-fluid">
-            <div class="mega-menu-wrapper">
-               <div class="header-main">               
-                  <div class="header-right d-flex justify-content-end">
-                     <div class="header-logo">
-                        <a href="https://oliveiraalpinismo.com.br">
-                           <img src="assets/imgs/logo/logo.png" alt="Logo Oliveira Alpinismo">
-                        </a>
-                     </div>  
-                     <div class="menu-with-search-wrapper">
-                        <div class="mean__menu-wrapper d-none d-lg-block">
-                           <div class="main-menu">
-                              <nav id="mobile-menu" aria-label="Mobile Menu Navigation">
-                                 <ul>
-                                    <li class="active"><a href="https://oliveiraalpinismo.com.br">Início</a></li><li>
-                                       <a href="empresa-de-alpinismo-industrial">Empresa</a>
-
-                                    </li>                           
-                                    <li class="has-dropdown">
-                                       <a href="#">Serviços</a>
-                                       <ul class="submenu">
-<li><a href="icamento">Içamento em Locais de Difícil Acesso</a></li>
-<li><a href="instalacao-de-banner-painel">Instalação de Banners e Painéis</a></li>
-<li><a href="limpeza-de-fachada-rj">Limpeza de Fachada</a></li>
-<li><a href="manutencao-pintura-industrial">Manutenção Industrial</a></li>
-<li><a href="manutencao-pintura-predial">Manutenção Predial</a></li>
-<li><a href="manutencao-de-torres-telefonia">Manutenção de Torres de Telefonia</a></li>
-<li><a href="pintura-de-fachadas-rj">Pintura de Fachadas</a></li>
-<li><a href="resgate-em-altura">Resgate em Altura</a></li>
-                                       </ul>
-                                    </li>
-                                    <li><a href="alpinismo-industrial">Alpinismo Industrial</a></li> 
-                                    <li><a href="formulario">Trabalhe conosco</a></li> 
-                                    <li class="has-dropdown">
-                                       <a href="#">Atendimento</a>
-                                       <ul class="submenu">
-                                          <li><a href="#">Rio de Janeiro</a></li>
-                                          <li><a href="#">São Paulo</a></li>
-                                          <li><a href="#">Espirito Santos</a></li>
-										  <li><a href="#">Minas Gerais</a></li>
-                                       </ul>
-                                    </li>                                   
-                                 </ul>
-                              </nav>
-                              <!-- for wp -->
-                              <div class="header__hamburger ml-50 d-none">
-                                 <button type="button" class="hamburger-btn offcanvas-open-btn">
-                                    <span>01</span>
-                                    <span>01</span>
-                                    <span>01</span>
-                                 </button>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="search-toggle-open header-search">
-                           <div class="search-icon">
-                              <i class="icon-search"></i>
-                           </div>
-                        </div>
-                     </div> 
-                     <div class="header-action d-xl-inline-flex gap-4">
-                        <div class="header-link">
-                           <a class="primary-btn-1 btn-hover" href="formulario">
-                              Contato <i class="icon-arrow-double-right"></i>
-                              <span style="top: 147.172px; left: 108.5px;"></span>
-                           </a>
-                        </div>
-                        <div class="header__hamburger my-auto">
-                           <div class="sidebar__toggle">
-                              <a class="bar-icon" href="#">
-                                 <svg width="30" height="24" viewBox="0 0 30 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M3.3125 4.59375C4.1927 4.59375 4.90625 3.8802 4.90625 3C4.90625 2.1198 4.1927 1.40625 3.3125 1.40625C2.4323 1.40625 1.71875 2.1198 1.71875 3C1.71875 3.8802 2.4323 4.59375 3.3125 4.59375Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M15 4.59375C15.8802 4.59375 16.5938 3.8802 16.5938 3C16.5938 2.1198 15.8802 1.40625 15 1.40625C14.1198 1.40625 13.4062 2.1198 13.4062 3C13.4062 3.8802 14.1198 4.59375 15 4.59375Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M26.6875 4.59375C27.5677 4.59375 28.2812 3.8802 28.2812 3C28.2812 2.1198 27.5677 1.40625 26.6875 1.40625C25.8073 1.40625 25.0938 2.1198 25.0938 3C25.0938 3.8802 25.8073 4.59375 26.6875 4.59375Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M3.3125 13.7812C4.1927 13.7812 4.90625 13.0677 4.90625 12.1875C4.90625 11.3073 4.1927 10.5938 3.3125 10.5938C2.4323 10.5938 1.71875 11.3073 1.71875 12.1875C1.71875 13.0677 2.4323 13.7812 3.3125 13.7812Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M15 13.7812C15.8802 13.7812 16.5938 13.0677 16.5938 12.1875C16.5938 11.3073 15.8802 10.5938 15 10.5938C14.1198 10.5938 13.4062 11.3073 13.4062 12.1875C13.4062 13.0677 14.1198 13.7812 15 13.7812Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M26.6875 13.7812C27.5677 13.7812 28.2812 13.0677 28.2812 12.1875C28.2812 11.3073 27.5677 10.5938 26.6875 10.5938C25.8073 10.5938 25.0938 11.3073 25.0938 12.1875C25.0938 13.0677 25.8073 13.7812 26.6875 13.7812Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M3.3125 22.9688C4.1927 22.9688 4.90625 22.2552 4.90625 21.375C4.90625 20.4948 4.1927 19.7812 3.3125 19.7812C2.4323 19.7812 1.71875 20.4948 1.71875 21.375C1.71875 22.2552 2.4323 22.9688 3.3125 22.9688Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M15 22.9688C15.8802 22.9688 16.5938 22.2552 16.5938 21.375C16.5938 20.4948 15.8802 19.7812 15 19.7812C14.1198 19.7812 13.4062 20.4948 13.4062 21.375C13.4062 22.2552 14.1198 22.9688 15 22.9688Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M26.6875 22.9688C27.5677 22.9688 28.2812 22.2552 28.2812 21.375C28.2812 20.4948 27.5677 19.7812 26.6875 19.7812C25.8073 19.7812 25.0938 20.4948 25.0938 21.375C25.0938 22.2552 25.8073 22.9688 26.6875 22.9688Z" stroke="#707070" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-                                 </svg>                                 
-                              </a>
-                           </div>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </div>
-<div class="large-container header-top-two p-relative" style="font-size: 24px;">
-   <div class="shape-black" data-background="assets/imgs/bg/header-bg.png"></div>
-   <div class="shape-yellow" data-background="assets/imgs/bg/header-bg-1.png"></div>
-   <div class="header-top" style="font-size: 24px;">
-      <div class="header-top-welcome-text" style="font-size: 36px;">
-         <span class="welcome" style="font-size: 36px;"></span>
-      </div>
-      <div class="header-top-contact-info" style="font-size: 24px;">
-        <span class="phone p-relative" style="font-size: 30px;"><a href="tel:+552136551564" style="font-size: 30px;">(21) 3655-1564</a></span>
-         <span class="phone p-relative" style="font-size: 30px;"><a href="tel:+5521965080674" style="font-size: 30px;">(21) 96508-0674</a></span>
-      </div>
-   </div>
-</div>
-   <!-- Header area end --> 
-</header>
-
- <main>
-
-   <div class="bar-wrapper-container p-relative">
-   
-   <!-- page title area start --> 
-   <div class="breadcrumb__area theme-bg-1 p-relative" data-background="assets/imgs/bg/page-title-1.jpg">
-      <div class="bar-top" data-background="assets/imgs/shapes/top-bar.png"></div>
-      <div class="bar-bottom" data-background="assets/imgs/shapes/bottom-bar.png"></div>
-      <div class="yellow-shape" data-background="assets/imgs/shapes/shape-12.png"></div>
-      <div class="custom-container">
-         <div class="row justify-content-center">
-            <div class="col-xxl-12">
-               <div class="breadcrumb__wrapper p-relative">
-                  <div class="breadcrumb__menu">
-                     <nav aria-label="Breadcrumb navigation">
-                        <ul>
-                           <li><span><a href="https://oliveiraalpinismo.com.br">Home</a></span></li>
-                           <li><span>ENVIADO COM SUCESSO!</span></li>
-                        </ul>
-                     </nav>
-                  </div>
-                  <h2 class="breadcrumb__title">ENVIADO COM SUCESSO!</h2>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-<!-- page title area end --> 
-
-
-
-
-</div><!-- bar-wrapper-end -->
-</main>
-     
-
-   <!-- Footer area start -->
-<footer>
-<a class="corzinha" href="https://wa.me/5521965080674"><div id="whatswidget-pre-wrapper" ><div id="whatswidget-widget-wrapper" class="whatswidget-widget-wrapper" style="all:revert;"><div class="whatswidget-button-wrapper" style="all:revert;"><div class="whatswidget-button" id="whatswidget-button" style="all:revert;"><img src="wts.svg" title="whatsapp oliveira alpinismo" alt="whatsapp oliveiraalpinismmo"></div></div></div></div></a>
-   <div class="footer-main bg-color-1 p-relative">
-      <div class="shape" data-background="assets/imgs/bg/footer-bg.png"></div>
-      <div class="custom-container p-relative">
-         <div class="footer-top pt-65 pb-30">
-            <div class="footer-logo">
-               <a href="#">
-                  <img src="assets/imgs/logo/logo.png" alt="Oliveira Alpinismo Logo">
-               </a>
-            </div>
-            <div class="footer-call">
-
-               <div class="info">
-                  <span>Entre em contato</span>
-                  <h4><a href="tel:4065550120">(21) 3655-1564</a></h4>
-               </div>
-            </div>
-         </div>
-         <div class="footer-middle pt-50 pb-70">
-            <div class="row g-4">
-            <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-6">
-               <div class="footer-widget-1">
-<h5 class="footer-widget-title mb-20">Oliveira Alpinismo</h5>
-<p>Somos líderes em soluções de alpinismo industrial, utilizando tecnologias de ponta para oferecer serviços de alta qualidade em manutenção, limpeza e reparos em locais de difícil acesso. Nossa experiência abrange diversos setores, garantindo segurança e eficiência em cada projeto.</p>
-
-                  <ul class="company-info mt-30">
-                     <li class="phone-number"><a href="tel:12463330088">(21) 3655-1564</a></li>
-                     <li class="email"><a href="#">comercial@oliveiraalpinismo.com.br</a></li>
-                     <li class="address">Rua Sete de Setembro 620 - 25020-190 <br>Duque de Caxias - Rio de Janeiro</li>
-                  </ul>
-               </div>
-            </div>
-            <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-6">
-               <div class="footer-widget-2 pl-70 pr-70">
-                  <h5 class="footer-widget-title mb-30">Links Rápidos</h5>
-                  <ul class="footer-menu-links">
-<li><a href="#">Pintura de Fachadas RJ</a></li>
-<li><a href="#">Limpeza de Fachada RJ</a></li>
-<li><a href="alpinismo-industrial">Alpinismo Industrial RJ</a></li>
-<li><a href="#">Resgate em Altura</a></li>
-<li><a href="#">Manutenção Industrial</a></li>
-                  </ul>
-               </div>
-            </div>
-            <div class="col-xxl-4 col-xl-3 col-lg-3 col-md-6">
-               <div class="footer-widget-3">
-<h5 class="footer-widget-title mb-25">Newsletter</h5>
-<p>Inscreva-se em nossa newsletter para receber atualizações sobre as mais recentes tecnologias e técnicas em alpinismo industrial, além de notícias exclusivas e insights sobre nossos serviços e projetos.</p>
-                  <div class="subscribe-form p-relative">
-                     <form action="#">
-                        <input type="email" placeholder="Email" required>
-                        <button type="submit"><i class="icon-arrow_carrot-right"></i></button>
-                     </form>
-                  </div>
-               </div>
-            </div>
-            
-            </div>
-         </div>
-         <div class="footer-bottom bg-color-2 pt-15 pb-15 text-center">
-            <p class="copy-right m-0">© 2024 <a href="#">Oliveira Alpinismo</a>. Todos os Direitos Reservados.</p>
-         </div>
-      </div>
-   </div>
-</footer>
-   <!-- Footer area end -->
-   
-
-   <!-- JS here -->
-   <script src="assets/js/jquery-3.6.0.min.js"></script>
-   <script src="assets/js/waypoints.min.js"></script>
-   <script src="assets/js/bootstrap.bundle.min.js"></script>
-   <script src="assets/js/meanmenu.min.js"></script>
-   <script src="assets/js/swiper.min.js"></script>
-   <script src="assets/js/slick.min.js"></script>
-   <script src="assets/js/magnific-popup.min.js"></script>
-   <script src="assets/js/counterup.js"></script>
-   <script src="assets/js/wow.js"></script>
-   <script src="assets/js/TweenMax.min.js"></script>
-   <script src="assets/js/main.js"></script>
-
-<script src="scriptcontato.js"></script><script>
-    // Preenche o campo oculto com o horário atual assim que a página carrega
-    document.addEventListener("DOMContentLoaded", function() {
-        var now = new Date().toISOString();
-        var timerField = document.getElementById("form_loaded_at");
-        if(timerField) {
-            timerField.value = now;
-        }
-    });
-</script>
+          <div class="box" style="margin-top:12px;">
+            <h2>O que acontece agora?</h2>
+            <ul class="list">
+              <li>Você já entrou na fila de atendimento</li>
+              <li>Análise do tipo de serviço</li>
+              <li>Retorno para combinar detalhes e valores</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </div>
 </body>
-
 </html>
