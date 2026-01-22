@@ -80,10 +80,143 @@
    <link rel="stylesheet" href="assets/css/magnific-popup.css">
    <link rel="stylesheet" href="assets/css/fontawesome-pro.css">
    <link rel="stylesheet" href="assets/css/icomoon.css">
-   <link rel="stylesheet" href="assets/css/spacing.css">
+   <link rel="stylesheet" href="assets/css/spacing.css?v=1.0.0">
    <link rel="stylesheet" href="assets/css/sweetalert2.min.css">
-   <link rel="stylesheet" href="assets/css/main.css">
+   <link rel="stylesheet" href="assets/css/main.css?v=1.0.0">
    <link rel="stylesheet" type="text/css" href="estilo/wts.css">
+ <style>
+/* ===== Oliveira Alpinismo - Contact Form (Premium Light) ===== */
+.oa-contact{
+  background:#fff;
+  border:1px solid rgba(16,24,40,.10);
+  border-radius:18px;
+  padding:22px;
+  box-shadow: 0 18px 50px rgba(16,24,40,.10);
+}
+
+.oa-form-head{ margin-bottom:16px; }
+.oa-badge{
+  display:inline-block;
+  padding:8px 12px;
+  border-radius:999px;
+  font-weight:800;
+  font-size:12px;
+  letter-spacing:.2px;
+  color:#1b1304;
+  border:1px solid rgba(214,178,94,.35);
+  background: linear-gradient(180deg, rgba(243,218,138,.55), rgba(214,178,94,.25));
+}
+
+.oa-title{
+  margin:12px 0 6px;
+  font-size:22px;
+  line-height:1.15;
+  letter-spacing:-.2px;
+  color:#101828;
+}
+
+.oa-subtitle{
+  margin:0;
+  color:#475467;
+  font-size:14px;
+  line-height:1.7;
+}
+
+.oa-form{ margin-top:14px; }
+.oa-grid{
+  display:grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap:14px;
+}
+
+.oa-full{ grid-column: 1 / -1; }
+
+.oa-field label{
+  display:block;
+  margin:0 0 6px;
+  font-size:12px;
+  font-weight:800;
+  color:#344054;
+}
+
+.oa-field input,
+.oa-field textarea{
+  width:100%;
+  border-radius:14px;
+  border:1px solid rgba(16,24,40,.14);
+  background:#fbfcff;
+  padding:12px 12px;
+  font-size:14px;
+  color:#101828;
+  outline:none;
+  transition: box-shadow .15s ease, border-color .15s ease, transform .10s ease;
+}
+
+.oa-field textarea{ padding:12px 12px; resize:vertical; min-height:140px; }
+
+.oa-field input:focus,
+.oa-field textarea:focus{
+  border-color: rgba(214,178,94,.65);
+  box-shadow: 0 0 0 4px rgba(214,178,94,.18);
+}
+
+.oa-help{
+  margin-top:8px;
+  font-size:12px;
+  color:#667085;
+}
+
+.oa-actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:6px;
+}
+
+.oa-btn{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:12px 16px;
+  border-radius:14px;
+  border:1px solid rgba(214,178,94,.40);
+  background: linear-gradient(180deg, #f3da8a, #d6b25e);
+  color:#1b1304;
+  font-weight:900;
+  font-size:14px;
+  letter-spacing:.2px;
+  cursor:pointer;
+  text-decoration:none;
+  box-shadow: 0 14px 32px rgba(214,178,94,.20);
+  transition: transform .12s ease, filter .12s ease;
+}
+
+.oa-btn:hover{ filter: brightness(1.03); }
+.oa-btn:active{ transform: translateY(1px); }
+
+.oa-btn-ghost{
+  background:#fff;
+  color:#101828;
+  border:1px solid rgba(16,24,40,.14);
+  box-shadow: 0 10px 22px rgba(16,24,40,.08);
+}
+
+.oa-btn-ghost:hover{ background:#fbfcff; }
+
+.oa-note{
+  font-size:12px;
+  color:#667085;
+  border-top:1px solid rgba(16,24,40,.10);
+  padding-top:12px;
+}
+
+/* Responsivo */
+@media (max-width: 992px){
+  .oa-grid{ grid-template-columns: 1fr; }
+}
+</style>
 <!-- Google Tag Manager --> <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src= 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f); })(window,document,'script','dataLayer','GTM-T5RCHCJ');</script> <!-- End Google Tag Manager --><link rel="stylesheet" href="stylescontato.css?v=1.0.1"></head>
 
 <body>
@@ -428,51 +561,83 @@
          <div class="contact-wrapper pt-80">
             <div class="row gy-50">
                <div class="col-xxl-6 col-xl-6">
+
+               </div>
+               <div class="contact-from oa-contact">
+  <div class="oa-form-head">
+    <span class="oa-badge">Atendimento Comercial</span>
+    <h3 class="oa-title">Solicite um orçamento</h3>
+    <p class="oa-subtitle">Preencha os dados abaixo. Se puder, descreva o serviço e envie detalhes (altura, acesso, fotos/vídeo) no WhatsApp.</p>
+  </div>
+
+  <form class="oa-form" action="https://oliveiraalpinismo.com.br/envia-email.php" method="post" autocomplete="on">
+    <div class="oa-grid">
+      <div class="oa-field">
+        <label for="oa-nome">Nome completo*</label>
+        <input id="oa-nome" name="nome" type="text" placeholder="Ex.: João Silva" required>
+      </div>
+
+      <div class="oa-field">
+        <label for="oa-email">E-mail*</label>
+        <input id="oa-email" name="email" type="email" placeholder="Ex.: joao@email.com" required>
+      </div>
+
+      <div class="oa-field">
+        <label for="oa-telefone">Telefone/WhatsApp*</label>
+        <input id="oa-telefone" name="telefone" type="tel" placeholder="Ex.: (21) 99999-9999" required inputmode="tel">
+      </div>
+
+      <div class="oa-field">
+        <label for="oa-assunto">Assunto (opcional)</label>
+        <input id="oa-assunto" name="assunto" type="text" placeholder="Ex.: Limpeza de fachada / Içamento / Pintura">
+      </div>
+
+      <div class="oa-field">
+        <label for="oa-cidade">Cidade (opcional)</label>
+        <input id="oa-cidade" name="cidade" type="text" placeholder="Ex.: Duque de Caxias">
+      </div>
+
+      <div class="oa-field">
+        <label for="oa-estado">Estado (opcional)</label>
+        <input id="oa-estado" name="estado" type="text" placeholder="RJ" maxlength="2" style="text-transform:uppercase">
+      </div>
+
+      <div class="oa-field oa-full">
+        <label for="oa-mensagem">Mensagem*</label>
+        <textarea id="oa-mensagem" name="mensagem" rows="6" placeholder="Descreva o serviço: tipo, altura aproximada, acesso, urgência, local..." required></textarea>
+        <div class="oa-help">
+          Dica: quanto mais detalhes, mais rápido sai o orçamento.
+        </div>
+      </div>
+
+      <!-- Honeypot (anti-spam) -->
+      <div style="display:none;">
+        <input type="text" name="honeypot" tabindex="-1" autocomplete="off">
+      </div>
+
+      <!-- Timer (seu JS já preenche) -->
+      <input type="hidden" id="form_loaded_at" name="form_loaded_at" value="">
+
+      <div class="oa-actions oa-full">
+        <button class="oa-btn" type="submit">
+          Enviar Solicitação
+          <span class="oa-btn-glow" aria-hidden="true"></span>
+        </button>
+
+        <a class="oa-btn oa-btn-ghost" href="https://wa.me/5521965080674" target="_blank" rel="noopener">
+          Falar no WhatsApp
+        </a>
+      </div>
+
+      <div class="oa-note oa-full">
+        Ao enviar, você será redirecionado para a página de sucesso.
+      </div>
+    </div>
+  </form>
+</div>
                   <div class="contact-map">
                      					 <iframe title="Google Tag Manager" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3678.564731852209!2d-43.31444762469323!3d-22.781529179343462!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9973805f6ade2d%3A0x8f77ea0ddbe7921!2sOliveira%20Alpinismo!5e0!3m2!1spt-BR!2sbr!4v1715192788160!5m2!1spt-BR!2sbr" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
                   </div>
-               </div>
-               <div class="col-xxl-6 col-xl-6">
-                  <div class="contact-from">
-                     <form id="form">
-                        <div class="row">
-                           <div class="col-lg-6">
-                              <div class="contact__from-input">
-                                 <input id="name" name="name" type="text" placeholder="Nome Completo">
-                              </div>
-                           </div>
-                           <div class="col-lg-6">
-                              <div class="contact__from-input">
-                                 <input id="email" name="email" type="email" placeholder="Endereço de Email*" required="">
-                              </div>
-                           </div>
-                           <div class="col-lg-6">
-                              <div class="contact__from-input">
-                                 <input id="phone" name="phone" type="tel" placeholder="Número de Telefone">
-                              </div>
-                           </div>
-                           <div class="col-lg-6">
-                              <div class="contact__from-input">
-                                 <input type="text" placeholder="Assunto">
-                              </div>
-                           </div>
-                           <div class="col-lg-12">
-                              <div class="contact__from-input">
-                                 <textarea id="message" name="message" placeholder="Sua Mensagem*" required=""></textarea>
-                              </div>
-                           </div>
-                           <div class="col-12">
-                              <div class="contact__btn">
-                                 <button class="primary-btn-4 btn-hover" type="submit" id="button">
-                                    Enviar Agora
-                                    <span style="top: 147.172px; left: 108.5px;"></span>
-                                 </button>
-                              </div>
-                           </div>
-                        </div>
-                     </form>
-                  </div>
-               </div>
             </div>
          </div>
       </div>
@@ -545,7 +710,7 @@
             </div>
          </div>
          <div class="footer-bottom bg-color-2 pt-15 pb-15 text-center">
-            <p class="copy-right m-0">© 2024 <a href="#">Oliveira Alpinismo</a>. Todos os Direitos Reservados.</p>
+            <p class="copy-right m-0">© 2026 <a href="#">Oliveira Alpinismo</a>. Todos os Direitos Reservados.</p>
          </div>
       </div>
    </div>
