@@ -1,6 +1,6 @@
 <?php
 // =====================================================
-// CONFIG (debug: pode desligar depois)
+// CONFIG (debug: desligue em produção se quiser)
 // =====================================================
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -27,34 +27,77 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 }
 
 // =====================================================
-// Coleta campos do formulário
+// Anti-spam (honeypot + tempo mínimo)
 // =====================================================
-$nome     = $_POST['nome'] ?? '';
-$email    = $_POST['email'] ?? '';
-$telefone = $_POST['telefone'] ?? '';
-$mensagem = $_POST['mensagem'] ?? '';
+$honeypot = (string)($_POST['honeypot'] ?? '');
+$formLoadedAt = (string)($_POST['form_loaded_at'] ?? '');
 
-// Sanitiza
+if (trim($honeypot) !== '') {
+    // Bot preencheu o campo escondido
+    header('Location: https://oliveiraalpinismo.com.br/');
+    exit;
+}
+
+if ($formLoadedAt !== '' && ctype_digit($formLoadedAt)) {
+    $elapsed = time() - (int)$formLoadedAt;
+    // menos de 3s costuma ser bot (ajuste se quiser)
+    if ($elapsed >= 0 && $elapsed < 3) {
+        header('Location: https://oliveiraalpinismo.com.br/');
+        exit;
+    }
+}
+
+// =====================================================
+// Coleta campos do formulário (aceita nomes antigos e novos)
+// =====================================================
+$nome   = (string)($_POST['nome'] ?? '');
+$email  = (string)($_POST['email'] ?? '');
+
+$ddd      = (string)($_POST['ddd'] ?? '');
+$telNum   = (string)($_POST['telefone'] ?? ''); // no seu form: "telefone" é o número (9 dígitos)
+$telefoneLegacy = (string)($_POST['telefone_completo'] ?? ''); // opcional, caso exista em alguma versão antiga
+
+$cidade = (string)($_POST['cidade'] ?? '');
+$estado = (string)($_POST['estado'] ?? '');
+
+// No seu HTML o textarea se chama "descricao". Mantemos compatibilidade com "mensagem".
+$descricao = (string)($_POST['descricao'] ?? ($_POST['mensagem'] ?? ''));
+
+// Monta telefone completo
+$telefoneFull = trim($telefoneLegacy);
+if ($telefoneFull === '') {
+    $p1 = preg_replace('/\D+/', '', $ddd);
+    $p2 = preg_replace('/\D+/', '', $telNum);
+    $telefoneFull = trim(($p1 !== '' ? "($p1) " : '') . ($p2 !== '' ? $p2 : ''));
+}
+
+// Sanitiza (texto)
 $nomeSafe     = safe_text($nome ?: 'Sem nome');
 $emailSafe    = safe_text($email ?: 'Sem email');
-$telefoneSafe = safe_text($telefone ?: 'Sem telefone');
 
-// Mensagem: preserva quebras de linha
-$mensagemRaw  = trim((string)$mensagem);
-$mensagemSafe = nl2br(htmlspecialchars($mensagemRaw ?: 'Sem mensagem', ENT_QUOTES, 'UTF-8'));
+$dddSafe      = safe_text(preg_replace('/\D+/', '', $ddd) ?: 'N/D');
+$telNumSafe   = safe_text(preg_replace('/\D+/', '', $telNum) ?: 'N/D');
+$telefoneSafe = safe_text($telefoneFull ?: 'Sem telefone');
 
-// Extras úteis (opcional)
-$dataHora = date('d/m/Y H:i:s');
-$ip       = $_SERVER['REMOTE_ADDR'] ?? 'N/D';
+$cidadeSafe   = safe_text($cidade ?: 'N/D');
+$estadoSafe   = safe_text(strtoupper($estado) ?: 'N/D');
+
+// Descrição: preserva quebras de linha
+$descricaoRaw  = trim((string)$descricao);
+$descricaoSafe = nl2br(htmlspecialchars($descricaoRaw ?: 'Sem mensagem', ENT_QUOTES, 'UTF-8'));
+
+// Extras úteis
+$dataHora  = date('d/m/Y H:i:s');
+$ip        = $_SERVER['REMOTE_ADDR'] ?? 'N/D';
 $userAgent = safe_text($_SERVER['HTTP_USER_AGENT'] ?? 'N/D');
 
 // URLs
-$siteUrl   = 'https://oliveiraalpinismo.com.br';
+$siteUrl    = 'https://oliveiraalpinismo.com.br';
 $sucessoUrl = $siteUrl . '/sucesso';
-$logoUrl   = $siteUrl . '/assets/imgs/logo/logo.png';
+$logoUrl    = $siteUrl . '/assets/imgs/logo/logo.png';
 
 // =====================================================
-// Monta e-mail HTML (CLARO, premium, compatível com inbox)
+// Monta e-mail HTML
 // =====================================================
 $subject = "Novo contato - Oliveira Alpinismo | {$nomeSafe}";
 
@@ -104,15 +147,36 @@ $html = '
 
                 <tr>
                   <td style="padding:10px 0;border-bottom:1px solid rgba(16,24,40,.08);">
+                    <div style="color:#667085;font-family:Arial,sans-serif;font-size:12px;">DDD</div>
+                    <div style="color:#101828;font-family:Arial,sans-serif;font-size:15px;font-weight:800;">'.$dddSafe.'</div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid rgba(16,24,40,.08);">
                     <div style="color:#667085;font-family:Arial,sans-serif;font-size:12px;">TELEFONE</div>
                     <div style="color:#101828;font-family:Arial,sans-serif;font-size:15px;font-weight:800;">'.$telefoneSafe.'</div>
                   </td>
                 </tr>
 
                 <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid rgba(16,24,40,.08);">
+                    <div style="color:#667085;font-family:Arial,sans-serif;font-size:12px;">CIDADE</div>
+                    <div style="color:#101828;font-family:Arial,sans-serif;font-size:15px;font-weight:800;">'.$cidadeSafe.'</div>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td style="padding:10px 0;border-bottom:1px solid rgba(16,24,40,.08);">
+                    <div style="color:#667085;font-family:Arial,sans-serif;font-size:12px;">ESTADO</div>
+                    <div style="color:#101828;font-family:Arial,sans-serif;font-size:15px;font-weight:800;">'.$estadoSafe.'</div>
+                  </td>
+                </tr>
+
+                <tr>
                   <td style="padding:10px 0;">
-                    <div style="color:#667085;font-family:Arial,sans-serif;font-size:12px;">MENSAGEM</div>
-                    <div style="color:#101828;font-family:Arial,sans-serif;font-size:14px;line-height:1.75;">'.$mensagemSafe.'</div>
+                    <div style="color:#667085;font-family:Arial,sans-serif;font-size:12px;">DESCRIÇÃO DO ORÇAMENTO</div>
+                    <div style="color:#101828;font-family:Arial,sans-serif;font-size:14px;line-height:1.75;">'.$descricaoSafe.'</div>
                   </td>
                 </tr>
 
@@ -155,8 +219,11 @@ $alt =
 "Novo contato recebido pelo site\n\n".
 "Nome: {$nomeSafe}\n".
 "Email: {$emailSafe}\n".
-"Telefone: {$telefoneSafe}\n\n".
-"Mensagem:\n".($mensagemRaw ?: 'Sem mensagem')."\n\n".
+"DDD: {$dddSafe}\n".
+"Telefone: {$telefoneSafe}\n".
+"Cidade: {$cidadeSafe}\n".
+"Estado: {$estadoSafe}\n\n".
+"Descrição do orçamento:\n".($descricaoRaw ?: 'Sem mensagem')."\n\n".
 "Data/Hora: {$dataHora}\n".
 "IP: {$ip}\n";
 
@@ -169,6 +236,8 @@ try {
     $mail->isSMTP();
     $mail->Host       = 'mail.smtp2go.com';
     $mail->SMTPAuth   = true;
+
+    // IMPORTANTE: mantenha suas credenciais aqui
     $mail->Username   = 'disparosite@oliveiraalpinismo.com.br';
     $mail->Password   = '@altura@Novo2';
 
@@ -179,7 +248,6 @@ try {
     // evita ficar carregando “pra sempre”
     $mail->Timeout = 20;
     $mail->SMTPDebug = 0; // se precisar ver log: 2
-    // $mail->Debugoutput = 'html';
 
     // De/Para
     $mail->setFrom('disparosite@oliveiraalpinismo.com.br', 'Site Oliveira Alpinismo');
@@ -201,7 +269,6 @@ try {
     exit;
 
 } catch (Exception $e) {
-    // Se quiser, você pode redirecionar para /erro também
     echo "Erro ao enviar mensagem: {$mail->ErrorInfo}";
     exit;
 }
