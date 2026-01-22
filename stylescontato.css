@@ -254,3 +254,426 @@
   .modal-content button[type="submit"],
   .close{ transition:none; }
 }
+/* =========================
+   Mobile Fix (v1.2) – deixa o modal bom no celular
+   Cole no FINAL do CSS
+   ========================= */
+
+/* Se seu JS coloca display:block, isso garante centralização (flex) */
+.modal[style*="display: block"]{ display:flex !important; }
+.modal[style*="display: flex"]{ display:flex !important; }
+
+.modal{
+  align-items:center;
+  justify-content:center;
+}
+
+/* Título + botão fechar não brigarem */
+.modal-content{
+  position: relative;
+}
+
+/* MOBILE: vira “sheet” (mais confortável) */
+@media (max-width: 600px){
+
+  /* overlay com menos padding = mais espaço útil */
+  .modal{
+    padding: 10px;
+    align-items:flex-end; /* sheet embaixo */
+  }
+
+  .modal-content{
+    width: 100%;
+    max-width: 100%;
+    border-radius: 18px 18px 14px 14px;
+    padding: 16px;
+
+    /* altura boa e moderna (dvh = viewport real no mobile) */
+    max-height: calc(92dvh - 10px);
+    overflow: auto;
+
+    /* animação mais “sheet” */
+    transform: translateY(10px);
+  }
+
+  /* Reserva espaço pro X */
+  .modal-content h2{
+    font-size: 26px;
+    line-height: 1.05;
+    margin: 4px 46px 14px 46px; /* espaço pros lados */
+    letter-spacing: -.2px;
+  }
+
+  .close{
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+  }
+
+  /* Labels menores e menos “respiro” */
+  .modal-content .input-group{
+    margin-bottom: 12px;
+  }
+  .modal-content .input-group label{
+    margin-bottom: 6px;
+    font-size: 12px;
+  }
+
+  /* Inputs mais “tight” e alinhados */
+  .modal-content .input-group input,
+  .modal-content .input-group textarea,
+  .modal-content .input-group select{
+    padding: 13px 12px;
+    border-radius: 14px;
+    font-size: 16px; /* evita zoom iOS */
+  }
+
+  .modal-content .input-group textarea{
+    min-height: 110px;
+  }
+
+  /* DDD + número: não esmagar e não ficar “quadradão” */
+  .modal-content .phone-fields{
+    gap: 10px;
+  }
+  .modal-content .phone-fields #ddd{
+    flex: 0 0 92px;
+    max-width: 92px;
+  }
+
+  /* Cidade + Estado: melhor proporção */
+  .modal-content .form-row{
+    gap: 10px;
+  }
+  .modal-content .form-row .input-group.cidade{
+    min-width: 0;
+  }
+  .modal-content .form-row .input-group.estado{
+    flex: 0 0 96px;
+  }
+
+  /* Botão bem grande e “thumb friendly” */
+  .modal-content button[type="submit"]{
+    padding: 15px 16px;
+    font-size: 16px;
+    border-radius: 14px;
+  }
+}
+
+/* TELAS MUITO ESTREITAS (tipo 320px): quebra linhas para não apertar */
+@media (max-width: 360px){
+  .modal-content h2{
+    font-size: 24px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+
+  .modal-content .phone-fields,
+  .modal-content .form-row{
+    flex-wrap: wrap;
+  }
+
+  .modal-content .phone-fields #ddd{
+    flex: 0 0 40%;
+    max-width: 40%;
+  }
+  .modal-content .phone-fields #telefone{
+    flex: 1 1 58%;
+  }
+
+  .modal-content .form-row .input-group.estado{
+    flex: 0 0 32%;
+  }
+  .modal-content .form-row .input-group.cidade{
+    flex: 1 1 66%;
+  }
+}
+/* =========================
+   Mobile v2 – Bottom Sheet CLARO (resolve de verdade)
+   Cole no FINAL do CSS
+   ========================= */
+
+@media (max-width: 600px){
+
+  /* força modal a virar flex quando seu JS usa display:block */
+  .modal[style*="display: block"],
+  .modal[style*="display: flex"]{
+    display:flex !important;
+  }
+
+  /* overlay mais limpo */
+  .modal{
+    padding: 10px;
+    align-items:flex-end;
+    justify-content:center;
+    background: rgba(0,0,0,.55);
+  }
+
+  /* o CARD vira um SHEET claro */
+  .modal-content{
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+
+    background: #ffffff !important;
+    color: #101828 !important;
+
+    border: 1px solid rgba(16,24,40,.12) !important;
+    border-radius: 18px 18px 14px 14px !important;
+    box-shadow: 0 18px 60px rgba(0,0,0,.35) !important;
+
+    padding: 14px 14px 92px 14px !important; /* espaço pro botão fixo */
+    max-height: 92dvh !important;
+    overflow: auto !important;
+
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+  }
+
+  /* título decente e sem briga com o X */
+  .modal-content h2{
+    color:#101828 !important;
+    font-size: 22px !important;
+    line-height: 1.1 !important;
+    margin: 6px 46px 14px 46px !important;
+    letter-spacing: -.2px !important;
+  }
+
+  /* botão fechar visível e clean */
+  .close{
+    top: 10px !important;
+    right: 10px !important;
+    width: 38px !important;
+    height: 38px !important;
+    border-radius: 12px !important;
+
+    background: rgba(16,24,40,.06) !important;
+    border: 1px solid rgba(16,24,40,.12) !important;
+    color: #101828 !important;
+  }
+
+  /* labels mais “premium” */
+  .modal-content .input-group label{
+    color:#344054 !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    margin-bottom: 6px !important;
+  }
+
+  /* inputs claros, com borda bonita */
+  .modal-content .input-group input,
+  .modal-content .input-group textarea,
+  .modal-content .input-group select{
+    background:#fbfcff !important;
+    border:1px solid rgba(16,24,40,.14) !important;
+    color:#101828 !important;
+
+    padding: 13px 12px !important;
+    border-radius: 14px !important;
+    font-size: 16px !important; /* evita zoom iOS */
+  }
+
+  .modal-content .input-group input::placeholder,
+  .modal-content .input-group textarea::placeholder{
+    color: rgba(16,24,40,.48) !important;
+  }
+
+  .modal-content .input-group input:focus,
+  .modal-content .input-group textarea:focus,
+  .modal-content .input-group select:focus{
+    border-color: rgba(201,108,8,.55) !important;
+    box-shadow: 0 0 0 4px rgba(201,108,8,.16) !important;
+    background:#ffffff !important;
+  }
+
+  /* layout: vira grid no mobile (melhor que flex) */
+  .modal-content .phone-fields{
+    display:grid !important;
+    grid-template-columns: 92px 1fr !important;
+    gap: 10px !important;
+  }
+  .modal-content .phone-fields #ddd{
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .modal-content .form-row{
+    display:grid !important;
+    grid-template-columns: 1fr 96px !important;
+    gap: 10px !important;
+  }
+  .modal-content .form-row .input-group.cidade,
+  .modal-content .form-row .input-group.estado{
+    min-width: 0 !important;
+    flex: initial !important;
+  }
+
+  /* textarea um pouco menor pra caber melhor */
+  .modal-content .input-group textarea{
+    min-height: 110px !important;
+  }
+
+  /* botão fixo no rodapé do sheet */
+  .modal-content button[type="submit"]{
+    position: sticky !important;
+    bottom: 10px !important;
+    width: 100% !important;
+
+    border-radius: 14px !important;
+    padding: 15px 16px !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+
+    background: linear-gradient(135deg, #c96c08, #ff9a1f) !important;
+    box-shadow: 0 14px 32px rgba(201,108,8,.22) !important;
+  }
+
+  /* o WhatsApp não pode ficar por cima do modal */
+  #whatswidget-pre-wrapper,
+  .corzinha{
+    z-index: 1 !important;
+  }
+  .modal{
+    z-index: 99999 !important;
+  }
+}
+
+/* telas MUITO estreitas */
+@media (max-width: 360px){
+  .modal-content h2{ font-size: 20px !important; }
+  .modal-content .form-row{ grid-template-columns: 1fr 88px !important; }
+  .modal-content .phone-fields{ grid-template-columns: 84px 1fr !important; }
+}
+/* =========================
+   Mobile Compact (v1.3)
+   Deixa tudo menor no celular
+   Cole no FINAL do CSS
+   ========================= */
+
+@media (max-width: 600px){
+
+  /* menos respiro no overlay */
+  .modal{ padding: 8px !important; }
+
+  /* modal mais “apertado” e eficiente */
+  .modal-content{
+    padding: 14px !important;
+    border-radius: 16px !important;
+    max-height: 94dvh !important;
+  }
+
+  /* título bem menor + menos margem */
+  .modal-content h2{
+    font-size: 22px !important;
+    margin: 4px 44px 10px 44px !important; /* sobra pro X */
+    line-height: 1.05 !important;
+    letter-spacing: -.2px !important;
+  }
+
+  /* botão fechar menor */
+  .close{
+    top: 8px !important;
+    right: 8px !important;
+    width: 34px !important;
+    height: 34px !important;
+    border-radius: 10px !important;
+    font-size: 18px !important;
+  }
+
+  /* labels menores e mais próximas */
+  .modal-content .input-group{
+    margin-bottom: 10px !important;
+  }
+  .modal-content .input-group label{
+    font-size: 11.5px !important;
+    margin-bottom: 5px !important;
+  }
+
+  /* inputs realmente menores (altura/padding) */
+  .modal-content .input-group input,
+  .modal-content .input-group textarea,
+  .modal-content .input-group select{
+    padding: 10px 11px !important;
+    border-radius: 12px !important;
+    font-size: 15px !important; /* pode ser 14, mas 15 costuma ficar ok */
+  }
+
+  /* textarea menor */
+  .modal-content .input-group textarea{
+    min-height: 92px !important;
+  }
+
+  /* DDD menor e gaps menores */
+  .modal-content .phone-fields{
+    gap: 8px !important;
+  }
+  .modal-content .phone-fields #ddd{
+    flex: 0 0 72px !important;
+    max-width: 72px !important;
+  }
+
+  /* cidade/estado menor e alinhado */
+  .modal-content .form-row{
+    gap: 8px !important;
+  }
+  .modal-content .form-row .input-group.estado{
+    flex: 0 0 76px !important;
+  }
+
+  /* botão menor */
+  .modal-content button[type="submit"]{
+    padding: 12px 14px !important;
+    font-size: 15px !important;
+    border-radius: 12px !important;
+  }
+}
+
+/* celulares bem pequenos (320px) */
+@media (max-width: 360px){
+  .modal-content h2{ font-size: 20px !important; }
+  .modal-content .phone-fields #ddd{
+    flex: 0 0 64px !important;
+    max-width: 64px !important;
+  }
+  .modal-content .form-row .input-group.estado{
+    flex: 0 0 70px !important;
+  }
+}
+/* =========================
+   FIX FINAL – Centralização real no mobile
+   ========================= */
+
+@media (max-width: 600px){
+
+  /* modal vira container flex centralizado */
+  .modal{
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+
+    padding: 12px !important;
+    height: 100dvh !important;
+  }
+
+  /* conteúdo SEM margin auto (isso causava o bug) */
+  .modal-content{
+    margin: 0 !important;
+
+    width: 100% !important;
+    max-width: 420px !important; /* evita ficar largo demais */
+    max-height: calc(100dvh - 24px) !important;
+
+    overflow-y: auto !important;
+    padding: 14px !important;
+    border-radius: 16px !important;
+  }
+
+  /* remove QUALQUER empurrão vertical */
+  .modal-content{
+    top: auto !important;
+    bottom: auto !important;
+    transform: none !important;
+  }
+}
