@@ -677,3 +677,37 @@
     transform: none !important;
   }
 }
+/* =========================
+   FIX FECHAR MODAL (mobile)
+   NÃO força display:flex o tempo todo
+   ========================= */
+
+@media (max-width: 600px){
+
+  /* layout do modal quando estiver aberto */
+  .modal{
+    align-items: center;
+    justify-content: center;
+    padding: 12px;
+    height: 100dvh;
+  }
+
+  /* quando o JS mandar display:none, respeita */
+  .modal[style*="display: none"]{
+    display: none !important;
+  }
+
+  /* quando o JS mandar display:block/flex, vira flex centralizado */
+  .modal[style*="display: block"],
+  .modal[style*="display: flex"]{
+    display: flex !important;
+  }
+
+  /* garante que o X está acima e clicável */
+  .modal-content{ position: relative; }
+  .close{
+    z-index: 9999;
+    pointer-events: auto;
+    touch-action: manipulation;
+  }
+}
